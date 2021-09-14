@@ -1,0 +1,40 @@
+1. Compile
+To compile the driver program use make like this:
+	$ make
+	$ make
+gcc -Wall -ggdb -c driver.c
+gcc -Wall -ggdb -c loglib.c
+gcc -Wall -ggdb driver.o loglib.o -o driver
+
+2. Execution
+	$ ./driver
+	$ cat messages.log
+[Mon, 13 Sep 21 12:47:48 +0300] INFO: T=0
+[Mon, 13 Sep 21 12:47:48 +0300] INFO: Nobody here
+[Mon, 13 Sep 21 12:47:48 +0300] WARN: Sombody here
+[Mon, 13 Sep 21 12:47:48 +0300] ERROR: Too many people here
+[Mon, 13 Sep 21 12:47:48 +0300] FAIL: Fatality...
+
+	$ ./driver -t 2
+	$ cat messages.log
+[Mon, 13 Sep 21 12:49:10 +0300] INFO: T=2
+[Mon, 13 Sep 21 12:49:13 +0300] INFO: Nobody here
+[Mon, 13 Sep 21 12:49:15 +0300] WARN: Sombody here
+[Mon, 13 Sep 21 12:49:16 +0300] ERROR: Too many people here
+[Mon, 13 Sep 21 12:49:19 +0300] FAIL: Fatality...
+
+	$ ./driver -t 2 out.txt
+	$ cat out.txt
+[Mon, 13 Sep 21 12:52:16 +0300] INFO: T=2
+[Mon, 13 Sep 21 12:52:19 +0300] INFO: Nobody here
+[Mon, 13 Sep 21 12:52:21 +0300] WARN: Sombody here
+[Mon, 13 Sep 21 12:52:22 +0300] ERROR: Too many people here
+[Mon, 13 Sep 21 12:52:25 +0300] FAIL: Fatality...
+
+	$ ./driver -x log.txt
+	$ ./driver: invalid option -- 'x'
+driver [-h] [-t sec] [logfile]
+
+3. Problems encountered
+	I had hard time, with the log_filename and perror string, being set and used,
+in two different files. Had to use the extern keyword in loglib.h, to make it work.
